@@ -10,27 +10,39 @@ public class ConverterUI extends JFrame {
 	private JTextField inputField2;
 	private JComboBox unitBox1;
 	private JComboBox unitBox2;
+	private Length[] lengthArr;
+	private Weight[] weightArr;
+	private Area[] areaArr;
+	private Time[] timeArr;
+	
 	private JRadioButton leftRight;
 	private JRadioButton rightLeft;
 	private boolean isLeftToRight = true;
 	private JMenuBar menuBar;
 	private JMenu menu;
+	private JMenuItem lengthMenu;
+	private JMenuItem weightMenu;
+	private JMenuItem areaMenu;
+	private JMenuItem timeMenu;
 	
 
 	public ConverterUI (UnitConverter uc) {
 		this.unitconverter = uc;
-		this.setTitle("Length Converter");
+		this.setTitle("Unit Converter");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		initComponents();
 	}
 	
 	private void initComponents() {
 		inputField1 = new JTextField(10);
-		Length[] lengthArr = unitconverter.getUnits();
+		lengthArr = unitconverter.getLength();
+		weightArr = unitconverter.getWeight();
+		areaArr = unitconverter.getArea();
+		timeArr = unitconverter.getTime();
 		unitBox1 = new JComboBox(lengthArr);
+		unitBox2 = new JComboBox(lengthArr);
 		inputField2 = new JTextField(10);
 		inputField2.setEditable(false);
-		unitBox2 = new JComboBox(lengthArr);
 		convertButton = new JButton("Convert!");
 		convertButton.addActionListener(new ConvertButtonListener());
 		clearButton = new JButton("Clear");
@@ -41,6 +53,54 @@ public class ConverterUI extends JFrame {
 		rightLeft.addActionListener(new RightLeftListener());
 		menuBar = new JMenuBar();
 		menu = new JMenu("Units");
+		lengthMenu = new JMenuItem("Length");
+		weightMenu = new JMenuItem("Weight");
+		areaMenu = new JMenuItem("Area");
+		timeMenu = new JMenuItem("Time");
+		lengthMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				unitBox1.removeAllItems();
+				unitBox2.removeAllItems();
+				for(int i = 0;i<lengthArr.length;i++) {
+					unitBox1.addItem(lengthArr[i]);
+					unitBox2.addItem(lengthArr[i]);
+				}
+			}
+		});
+		weightMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				unitBox1.removeAllItems();
+				unitBox2.removeAllItems();
+				for(int i = 0;i<weightArr.length;i++) {
+					unitBox1.addItem(weightArr[i]);
+					unitBox2.addItem(weightArr[i]);
+				}
+			}
+		});
+		areaMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				unitBox1.removeAllItems();
+				unitBox2.removeAllItems();
+				for(int i = 0;i<areaArr.length;i++) {
+					unitBox1.addItem(areaArr[i]);
+					unitBox2.addItem(areaArr[i]);
+				}
+			}
+		});
+		timeMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				unitBox1.removeAllItems();
+				unitBox2.removeAllItems();
+				for(int i = 0;i<timeArr.length;i++) {
+					unitBox1.addItem(timeArr[i]);
+					unitBox2.addItem(timeArr[i]);
+				}
+			}
+		});
+		menu.add(lengthMenu);
+		menu.add(weightMenu);
+		menu.add(areaMenu);
+		menu.add(timeMenu);
 		menuBar.add(menu);
 		
 		//designing JFrame
@@ -48,7 +108,7 @@ public class ConverterUI extends JFrame {
 		contents.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		contents.setLayout(new FlowLayout());
 		contents.setResizable(false);
-		contents.setBounds(0,0,630,100);
+		contents.setBounds(0,0,660,130);
 		contents.add(inputField1);
 		contents.add(unitBox1);
 		contents.add(new JLabel("="));
@@ -80,10 +140,10 @@ public class ConverterUI extends JFrame {
 			try {
 				double value = Double.valueOf(s);
 				if (isLeftToRight) {
-					double result = unitconverter.convert(value, (Length)unitBox1.getSelectedItem(), (Length)unitBox2.getSelectedItem());
+					double result = unitconverter.convert(value, (Unit)unitBox1.getSelectedItem(), (Unit)unitBox2.getSelectedItem());
 					inputField2.setText(result+"");
 				} else {
-					double result = unitconverter.convert(value, (Length)unitBox2.getSelectedItem(),  (Length)unitBox1.getSelectedItem());
+					double result = unitconverter.convert(value, (Unit)unitBox2.getSelectedItem(),  (Unit)unitBox1.getSelectedItem());
 					inputField1.setText(result+"");
 				}
 			} catch (NumberFormatException e) {

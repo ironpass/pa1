@@ -1,11 +1,12 @@
 
-public enum Length {
+public enum Length implements Unit {
 	METER("Meter", 1.00),
+	CENTIMETER("Centimeter", 0.01),
 	KILOMETER("Kilometer", 1000.0),
 	MILE("Mile", 1609.344),
 	FOOT("Foot", 0.30480),
-	WA("Wa", 2.0),
-	CENTIMETER("Centimeter", 0.01);
+	WA("Wa", 2.0);
+	
 	
 	private final String name;
 	private final double value;

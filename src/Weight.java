@@ -1,10 +1,11 @@
 
-public enum Weight {
-	GRAM("Gram", 1000.00),
+public enum Weight implements Unit {
+	GRAM("Gram", 0.001),
 	KILOGRAM("Kilogram", 1.0),
-	MILLIGRAM("Milligram", 1000000.00),
+	MILLIGRAM("Milligram", 0.000001),
 	POUND("Pound", 2.20462),
-	OUNCE("Ounce", 35.274);
+	OUNCE("Ounce", 35.274),
+	CHANG("Chang", 1.2);
 	
 	private final String name;
 	private final double value;

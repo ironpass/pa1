@@ -6,7 +6,6 @@ public class ConverterApp {
 		}
 		// test the convert method
 		UnitConverter test = new UnitConverter();
-		
 		System.out.println(test.convert(5.0, Length.METER, Length.CENTIMETER));
 	}
 }
